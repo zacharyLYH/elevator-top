@@ -11,24 +11,11 @@ class Elevator:
 
     # Adds a destination floor to destination_floors and sorts it. Make sure to set status as Moving. Suppose we're at floor 1 and floor 5 and 3 come in, we sort so that we go from 1->3->5
     def add_destination(self, floor):
-        if floor not in self.destination_floors:
-            self.destination_floors.append(floor)
-            self.destination_floors.sort(reverse=self.current_floor > floor)
-            self.update_direction()
-            self.status = 'Moving'
+        return 
 
     # Set the direction the lift should travel in based on current_floor and destination_floors. If no destination_floors it should be Idle
     def update_direction(self):
-        if self.destination_floors:
-            if self.current_floor < self.destination_floors[0]:
-                self.direction = 'Up'
-            elif self.current_floor > self.destination_floors[0]:
-                self.direction = 'Down'
-            else:
-                self.direction = 'Idle'
-        else:
-            self.direction = 'Idle'
-            self.status = 'Idle'
+        return
 
     def move(self):
         if self.direction == 'Up':
@@ -66,21 +53,7 @@ class ElevatorControlSystem:
     # Elevator C is on floor 7 and idle.
     # If a request is made from floor 6 to floor 8, the function chooses Elevator C since it is idle and closest to the request’s current floor. If all were busy, it would pick the one that could reach floor 6 the fastest.
     def pickup(self, request):
-        min_distance = float('inf')
-        best_elevator = None
-        for elevator in self.elevators:
-            distance = abs(elevator.current_floor - request.current_floor)
-            if elevator.status == 'Idle':
-                if distance < min_distance:
-                    min_distance = distance
-                    best_elevator = elevator
-            else:
-                if distance < min_distance:
-                    min_distance = distance
-                    best_elevator = elevator
-        if best_elevator:
-            best_elevator.add_destination(request.current_floor)
-            best_elevator.add_destination(request.desired_floor)
+        return
 
     def step(self):
         for elevator in self.elevators:
@@ -126,9 +99,8 @@ def main():
         else:
             try:
                 current_floor, desired_floor = map(int, user_input.split())
-                if current_floor < 1 or current_floor > num_floors or desired_floor < 1 or desired_floor > num_floors:
-                    print(f"Floors must be between 1 and {num_floors}.")
-                    continue
+                # Basic validation
+                # if ....
                 request = Request(current_floor, desired_floor)
                 ecs.pickup(request)
                 print(f"Request added: from floor {current_floor} to floor {desired_floor}")
